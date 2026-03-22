@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>DevOps Docker Project</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚀 DevOps Docker Compose Project</h1>
+<h3>Flask • PostgreSQL • Redis</h3>
+
+<p class="author">Created by <b>Altamash Alam</b></p>
+
+<div class="card">
+
+<h2>Service Status</h2>
+
+<div class="service">
+<span>PostgreSQL Database</span>
+<div id="db-status" class="status red"></div>
+</div>
+
+<div class="service">
+<span>Redis Cache</span>
+<div id="redis-status" class="status red"></div>
+</div>
+
+</div>
+
+<div class="message">
+
+<h3>🎉 Project Completed</h3>
+
+<p>
+This project demonstrates a containerized DevOps application using
+<b>Docker, Docker Compose, Flask, PostgreSQL, and Redis</b>.
+</p>
+
+<p>
+The dashboard dynamically checks service connectivity and displays
+real-time backend service status.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+async function checkStatus(){
+
+const res = await fetch("/status");
+const data = await res.json();
+
+const db = document.getElementById("db-status");
+const redis = document.getElementById("redis-status");
+
+if(data.postgres){
+db.className="status green";
+}else{
+db.className="status red";
+}
+
+if(data.redis){
+redis.className="status green";
+}else{
+redis.className="status red";
+}
+
+}
+
+setInterval(checkStatus,2000)
+checkStatus()
+
+</script>
+
+</body>
+</html>

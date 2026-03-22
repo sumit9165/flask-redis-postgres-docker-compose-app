@@ -1,0 +1,40 @@
+
+version: '3.8'
+
+services:
+
+  web:
+    build: .
+    container_name: devops_web
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      DB_HOST: db
+      POSTGRES_DB: devopsdb
+      POSTGRES_USER: devops
+      POSTGRES_PASSWORD: devops
+      REDIS_HOST: redis
+
+  db:
+    image: postgres:15
+    container_name: devops_postgres
+    environment:
+      POSTGRES_DB: devopsdb
+      POSTGRES_USER: devops
+      POSTGRES_PASSWORD: devops
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: devops_redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
